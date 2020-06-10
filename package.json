@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "debug": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/CharlyTalavera/atix-labs/issues"
   },
-  "homepage": "https://github.com/CharlyTalavera/atix-labs#readme"
+  "homepage": "https://github.com/CharlyTalavera/atix-labs#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "require-dir": "^1.2.0"
+  }
 }

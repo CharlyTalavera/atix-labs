@@ -1,4 +1,5 @@
 module.exports = {
-    'GET /block': 'TransactionController.create',
+    'POST /transaction': 'TransactionController.create',
+    'GET /transactions': 'TransactionController.get',
     'GET /info/status': 'StatusController.get',
 }

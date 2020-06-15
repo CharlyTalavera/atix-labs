@@ -2,9 +2,11 @@ const fs = require('fs');
 const requireDir = require('require-dir');
 const config = require('./config/constants.js');
 const controllers = requireDir(config.controllers);
+const services = requireDir(config.services);
 const routes = require(config.routes);
 const express = require('express');
 const app = express();
+global.config = config;
 global._ = require('lodash');
 
 function loadControllers(){
@@ -16,21 +18,34 @@ function loadControllers(){
 		const func = handler.split('.').pop();
 		
 		if(_.isUndefined(controllers[controller])){
-			console.warn(`Cannot find controller '${controller}' in controllers dir...`);
+			console.warn(`Cannot find controller '${controller}' in controllers dir, skipping...`);
 			continue;
 		}
 
 		if(_.isUndefined(controllers[controller][func])){
-			console.warn(`Cannot find function '${func}' in controller ${controller}...`);
+			console.warn(`Cannot find function '${func}' in controller ${controller}, skipping...`);
 			continue;
 		}
 
-		app[method](endpoint, (controllers[controller][func]));
+		app[method](endpoint, controllers[controller][func]);
 	}
 		
 }
 
-loadControllers();
+function loadServices(){
+	for( [serviceName, service] of Object.entries(services))
+		global[serviceName] = service;
+
+	global.StorageService = global[`${config.storage_service}Service`];
+}
+
+function bootstrap(){
+	loadControllers();
+	loadServices();
+}
+
+
+bootstrap();
 
 app.listen(config.port,()=>{
 	console.log(`Listening on port ${config.port}`);

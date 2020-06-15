@@ -1,4 +1,3 @@
-const fs = require('fs');
 const requireDir = require('require-dir');
 const config = require('./config/constants.js');
 const controllers = requireDir(config.controllers);
@@ -6,8 +5,13 @@ const services = requireDir(config.services);
 const routes = require(config.routes);
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
 global.config = config;
 global._ = require('lodash');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 function loadControllers(){
 	for (const [route, handler] of Object.entries(routes)){

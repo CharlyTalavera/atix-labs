@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "debug": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/CharlyTalavera/atix-labs#readme",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "should": "^13.2.3"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

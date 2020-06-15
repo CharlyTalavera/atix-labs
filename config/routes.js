@@ -1,4 +1,4 @@
 module.exports = {
-    'POST /block': 'BlockController.create',
-    'GET /info/status': 'StatusController.get'
+    'GET /block': 'TransactionController.create',
+    'GET /info/status': 'StatusController.get',
 }

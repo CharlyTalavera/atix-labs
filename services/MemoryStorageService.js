@@ -1,4 +1,4 @@
-const memory = [];
+let memory = [];
 
 module.exports = {
     getLastLine: () => {
@@ -13,5 +13,9 @@ module.exports = {
 
     getAll: () => {
         return memory;
+    },
+
+    clean: () => {
+        memory = [];
     }
 }

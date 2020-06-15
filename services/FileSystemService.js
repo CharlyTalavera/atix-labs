@@ -11,11 +11,11 @@ module.exports = {
             });
     },
 
-    save(line){
+    save: (line) => {
         fs.appendFileSync(config.storage_path, `${line}\n`); // If file does not exist, it will be created.
     },
 
-    getAll(){
+    getAll: () => {
         try{
             const result = fs.readFileSync(config.storage_path).toString().split('\n').filter(line => !_.isEmpty(line));
             return result;
@@ -24,5 +24,10 @@ module.exports = {
             console.log(e);
             return [];
         }
+    },
+
+    clean: () => {
+        if(fs.existsSync(config.storage_path))
+            fs.unlinkSync(config.storage_path);
     }
 }

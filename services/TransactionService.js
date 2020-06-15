@@ -4,6 +4,19 @@ FIRST_NONCE = '0';
 
 function create(message) {
     return new Promise( async (resolve, reject) => {
+        
+        const lastTransaction = await TransactionService.last();
+
+        if(_.isEmpty(lastTransaction.hash)){
+            await StorageService.save(`${FIRST_HASH_VALUE},${message},${FIRST_NONCE}`);
+            console.log('Saved first transaction.');
+            return resolve({
+                hash: FIRST_HASH_VALUE,
+                message,
+                nonce: FIRST_NONCE
+            });
+        }
+
         var child = require('child_process').fork('child/child.js');
         child.on("message", async function(result){
             const data = JSON.parse(result);
@@ -16,18 +29,6 @@ function create(message) {
             console.log(`Ok, transaction saved.`);
             resolve(data);
         });
-
-        const lastTransaction = await TransactionService.last();
-
-        if(_.isEmpty(lastTransaction.hash)){
-            await StorageService.save(`${FIRST_HASH_VALUE},${message},${FIRST_NONCE}`);
-            console.log('Saved first transaction.');
-            return resolve({
-                hash: FIRST_HASH_VALUE,
-                message,
-                nonce: FIRST_NONCE
-            });
-        }
 
         child.send(JSON.stringify({hash:lastTransaction.hash, message}));
     })

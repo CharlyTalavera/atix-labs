@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    atix-api:
+        image: "node:12"
+        command: "bash -c 'npm i && npm run test'"
+        working_dir: "/app"
+        volumes:
+            - .:/app
+        env_file:
+            - ./test.env
+        ports:
+            - "3000:3000"
